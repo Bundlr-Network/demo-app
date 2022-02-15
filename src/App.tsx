@@ -12,6 +12,7 @@ import { Web3Provider } from "@ethersproject/providers";
 import { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom"
 import * as nearAPI from "near-api-js"
 import { WalletConnection } from "near-api-js";
+import MyAlgoConnect from "@randlabs/myalgo-connect";
 
 const { keyStores, connect } = nearAPI;
 
@@ -30,7 +31,7 @@ function App() {
   const [price, setPrice] = React.useState<BigNumber>();
   const [bundler, setBundler] = React.useState<WebBundlr>();
   const [bundlerHttpAddress, setBundlerAddress] = React.useState<string>(
-    "https://node1.bundlr.network"
+    "http://localhost:10001"
   );
   const [fundAmount, setFundingAmount] = React.useState<string>();
   const [withdrawAmount, setWithdrawAmount] = React.useState<string>();
@@ -213,6 +214,11 @@ function App() {
         toast({ status: "warning", title: "Click 'Connect' to be redirected to authorize access key creation." })
       }
       return wallet
+    },
+    "myalgo-connect": async (c: any) => {
+      const myAlgoWallet = new MyAlgoConnect();
+      await myAlgoWallet.connect();
+      return myAlgoWallet;
     }
 
   } as any
@@ -273,7 +279,10 @@ function App() {
         helperUrl: "https://helper.mainnet.near.org",
         explorerUrl: "https://explorer.mainnet.near.org",
       }
-    }
+    },
+    "algorand": {
+      providers: ["myalgo-connect"], opts: {}
+    },
   } as any
 
 
