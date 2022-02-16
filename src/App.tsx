@@ -12,7 +12,7 @@ import { Web3Provider } from "@ethersproject/providers";
 import { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom"
 import * as nearAPI from "near-api-js"
 import { WalletConnection } from "near-api-js";
-import MyAlgoConnect from "@randlabs/myalgo-connect";
+// import MyAlgoConnect from "@randlabs/myalgo-connect";
 
 const { keyStores, connect } = nearAPI;
 
@@ -215,11 +215,11 @@ function App() {
       }
       return wallet
     },
-    "myalgo-connect": async (c: any) => {
-      const myAlgoWallet = new MyAlgoConnect();
-      await myAlgoWallet.connect();
-      return myAlgoWallet;
-    }
+    // "myalgo-connect": async (c: any) => {
+    //   const myAlgoWallet = new MyAlgoConnect();
+    //   await myAlgoWallet.connect();
+    //   return myAlgoWallet;
+    // }
 
   } as any
 
@@ -280,9 +280,9 @@ function App() {
         explorerUrl: "https://explorer.mainnet.near.org",
       }
     },
-    "algorand": {
-      providers: ["myalgo-connect"], opts: {}
-    },
+    // "algorand": {
+    //   providers: ["myalgo-connect"], opts: {}
+    // },
   } as any
 
 
