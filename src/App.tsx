@@ -1,6 +1,6 @@
 import React from "react";
 
-import { WebBundlr } from "@bundlr-network/client"
+//import { WebBundlr } from "@bundlr-network/client"
 import BigNumber from "bignumber.js";
 import { Button } from "@chakra-ui/button";
 import { Input, HStack, Text, VStack, useToast, Menu, MenuButton, MenuList, MenuItem, Tooltip } from "@chakra-ui/react";
@@ -12,12 +12,24 @@ import { Web3Provider } from "@ethersproject/providers";
 //import { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom"
 import * as nearAPI from "near-api-js"
 import { WalletConnection } from "near-api-js";
+// import {WebBundlr} from "@bundlr-network/client/"
+// import "@bundlr-network/client/build/esm/bundle"
+// import { SolanaBundlr } from "@bundlr-network/solana-web/esm/web/bundle";
+import * as SolanaBundlr from "@bundlr-network/solana-web/esm/web/umd.bundle"
+import * as EthereumBundlr from "@bundlr-network/ethereum-web/esm/web/umd.bundle"
+// import * as NearBundlr from "@bundlr-network/near-web/esm/web/umd.bundle"
 
+// import "@bundlr-network/solana-web/esm/web/index";
+// import "@bundlr-network/ethereum-web/esm/web/index";
+import { WebBundlr } from "@bundlr-network/client/build/esm/bundle"
 const { keyStores, connect } = nearAPI;
 
 declare var window: any // TODO: specifically extend type to valid injected objects.
 const PhantomWalletAdapter = require("@solana/wallet-adapter-phantom/lib/cjs/index").PhantomWalletAdapter
 
+globalThis.BundlrSolanaWeb = SolanaBundlr;
+globalThis.BundlrEthereumWeb = EthereumBundlr;
+// globalThis.BundlrNearWeb = NearBundlr;
 
 function App() {
   const defaultCurrency = "Select a Currency"
@@ -29,6 +41,7 @@ function App() {
   const [img, setImg] = React.useState<Buffer>();
   const [price, setPrice] = React.useState<BigNumber>();
   const [bundler, setBundler] = React.useState<WebBundlr>();
+  //const [bundler, setBundler] = React.useState<SolanaBundlr>();
   const [bundlerHttpAddress, setBundlerAddress] = React.useState<string>(
     "https://node1.bundlr.network"
   );
@@ -91,7 +104,7 @@ function App() {
   const uploadFile = async () => {
     if (img) {
       await bundler?.uploader.upload(img, [{ name: "Content-Type", value: "image/png" }])
-        .then((res) => {
+        .then((res:any) => {
           toast({
             status: res?.status === 200 || res?.status === 201 ? "success" : "error",
             title: res?.status === 200 || res?.status === 201 ? "Successful!" : `Unsuccessful! ${res?.status}`,
@@ -109,8 +122,8 @@ function App() {
       const value = parseInput(fundAmount)
       if (!value) return
       await bundler.fund(value)
-        .then(res => { toast({ status: "success", title: `Funded ${res?.target}`, description: ` tx ID : ${res?.id}`, duration: 10000 }) })
-        .catch(e => {
+        .then((res:any) => { toast({ status: "success", title: `Funded ${res?.target}`, description: ` tx ID : ${res?.id}`, duration: 10000 }) })
+        .catch((e:any) => {
           toast({ status: "error", title: `Failed to fund - ${e.data?.message || e.message}` })
         })
     }
@@ -124,7 +137,7 @@ function App() {
       if (!value) return
       await bundler
         .withdrawBalance(value)
-        .then((data) => {
+        .then((data:any) => {
           toast({
             status: "success",
             title: `Withdrawal successful - ${data.data?.tx_id}`,
@@ -304,7 +317,9 @@ function App() {
   };
 
   const initBundlr = async () => {
-    const bundlr = WebBundlr.newBundlr(bundlerHttpAddress, currency, provider)
+    const bundlr = await WebBundlr.newBundlr(bundlerHttpAddress, currency, provider)
+    // const bundlr = new SolanaBundlr(bundlerHttpAddress, provider)
+    await bundlr.ready();
     try {
       // Check for valid bundlr node
       await bundlr.utils.getBundlerAddress(currency)
