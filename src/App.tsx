@@ -56,6 +56,7 @@ function App() {
 
   const [rpcUrl, setRpcUrl] = React.useState<string>();
   const [contractAddress, setContractAddress] = React.useState<string>();
+  const [minConfirm, setMinConfirm] = React.useState<number>();
   const [devMode, setDevMode] = React.useState<boolean>(false);
   const [chainChange, setChainChange] = React.useState<boolean>(true);
 
@@ -343,7 +344,7 @@ function App() {
 
   const initBundlr = async () => {
     
-    const bundlr = await WebBundlr.init(bundlerHttpAddress, currency, provider)
+    const bundlr = await WebBundlr.init(bundlerHttpAddress, currency, provider, {providerUrl: rpcUrl, contractAddress, minConfirm})
 
     try {
       // Check for valid bundlr node
@@ -437,7 +438,12 @@ function App() {
           onChange={(evt: React.BaseSyntheticEvent) => {setContractAddress(evt.target.value)}}
           placeholder="Contract address"
         />
-        <Button onClick={() => setChainChange(!chainChange)} width='450px'>
+        <Input width='450px'
+          value={minConfirm}
+          onChange={(evt: React.BaseSyntheticEvent) => {setMinConfirm(evt.target.value)}}
+          placeholder="minConfirm"
+        />
+        <Button onClick={() => setChainChange(!chainChange)} width='400px'>
           {chainChange ? "Disable" : "Enable"} Chain Changing
         </Button>
 
