@@ -343,7 +343,7 @@ function App() {
 
   const initBundlr = async () => {
     
-    const bundlr = await WebBundlr.newBundlr(bundlerHttpAddress, currency, provider)
+    const bundlr = await WebBundlr.init(bundlerHttpAddress, currency, provider)
 
     try {
       // Check for valid bundlr node
