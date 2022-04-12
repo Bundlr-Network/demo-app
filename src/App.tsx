@@ -1,35 +1,43 @@
+/* eslint-disable import/first */
+
+// import * as Arbundles from "arbundles/esm/umd.bundle"
+// globalThis.arbundles = Arbundles;
+import "arbundles/esm/umd.bundle"
+
 import React from "react";
 
-//import { WebBundlr } from "@bundlr-network/client"
 import BigNumber from "bignumber.js";
 import { Button } from "@chakra-ui/button";
 import { Input, HStack, Text, VStack, useToast, Menu, MenuButton, MenuList, MenuItem, Tooltip } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons"
 
-import WalletConnectProvider from "@walletconnect/web3-provider";
+// import WalletConnectProvider from "@walletconnect/web3-provider";
 import { providers } from "ethers"
 import { Web3Provider } from "@ethersproject/providers";
-//import { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom"
-import * as nearAPI from "near-api-js"
-import { WalletConnection } from "near-api-js";
-// import {WebBundlr} from "@bundlr-network/client/"
-// import "@bundlr-network/client/build/esm/bundle"
-// import { SolanaBundlr } from "@bundlr-network/solana-web/esm/web/bundle";
-import * as SolanaBundlr from "@bundlr-network/solana-web/esm/web/umd.bundle"
-import * as EthereumBundlr from "@bundlr-network/ethereum-web/esm/web/umd.bundle"
-// import * as NearBundlr from "@bundlr-network/near-web/esm/web/umd.bundle"
 
-// import "@bundlr-network/solana-web/esm/web/index";
-// import "@bundlr-network/ethereum-web/esm/web/index";
+import { WalletConnection, keyStores, connect } from "near-api-js";
+// @ts-ignore
+import * as SolanaBundlr from "@bundlr-network/solana-web/esm/web/umd.bundle"
+// @ts-ignore
+import * as EthereumBundlr from "@bundlr-network/ethereum-web/esm/web/umd.bundle"
+// @ts-ignore
+globalThis.BundlrSolanaWeb = SolanaBundlr;
+// @ts-ignore
+globalThis.BundlrEthereumWeb = EthereumBundlr;
+// import "@bundlr-network/solana-web/esm/web/umd.bundle"
+// import "@bundlr-network/ethereum-web/esm/web/umd.bundle"
+
+// import { WebBundlr } from "@bundlr-network/client/build/esm/bundle" 
+// import type {WebBundlr as test} from "@bundlr-network/client/build/esm/@bundlr-network/client"
+// @ts-ignore
 import { WebBundlr } from "@bundlr-network/client/build/esm/bundle"
-const { keyStores, connect } = nearAPI;
 
 declare var window: any // TODO: specifically extend type to valid injected objects.
-const PhantomWalletAdapter = require("@solana/wallet-adapter-phantom/lib/cjs/index").PhantomWalletAdapter
+const PhantomWalletAdapter = require("@solana/wallet-adapter-phantom").PhantomWalletAdapter
 
-globalThis.BundlrSolanaWeb = SolanaBundlr;
-globalThis.BundlrEthereumWeb = EthereumBundlr;
-// globalThis.BundlrNearWeb = NearBundlr;
+
+
+
 
 function App() {
   const defaultCurrency = "Select a Currency"
@@ -112,7 +120,7 @@ function App() {
             duration: 15000,
           });
         })
-        .catch(e => { toast({ status: "error", title: `Failed to upload - ${e}` }) })
+        .catch((e:any) => { toast({ status: "error", title: `Failed to upload - ${e}` }) })
     }
   };
 
@@ -205,7 +213,7 @@ function App() {
       }
       return provider;
     },
-    "WalletConnect": async (c: any) => { return await connectWeb3(await (new WalletConnectProvider(c)).enable()) },
+    // "WalletConnect": async (c: any) => { return await connectWeb3(await (new WalletConnectProvider(c)).enable()) },
     "Phantom": async (c: any) => {
       if (window.solana.isPhantom) {
         await window.solana.connect();
@@ -346,7 +354,11 @@ function App() {
       clearInterval(intervalRef.current)
     }
 
-    intervalRef.current = window.setInterval(async () => { bundler?.getLoadedBalance().then((r) => { setBalance(r.toString()) }).catch(_ => clearInterval(intervalRef.current)) }, 5000)
+    intervalRef.current = window.setInterval(async () => {
+       bundler?.getLoadedBalance()
+       .then((r:any) => { setBalance(r.toString()) })
+       .catch((_:any) => clearInterval(intervalRef.current)) 
+      }, 5000)
   }
 
   // parse decimal input into atomic units
