@@ -17,17 +17,25 @@ import { Web3Provider } from "@ethersproject/providers";
 
 import { WalletConnection, keyStores, connect } from "near-api-js";
 // @ts-ignore
-// import * as SolanaBundlr from "@bundlr-network/solana-web/esm/web/umd.bundle"
-// // @ts-ignore
-// import * as EthereumBundlr from "@bundlr-network/ethereum-web/esm/web/umd.bundle"
-// // @ts-ignore
-// globalThis.BundlrSolanaWeb = SolanaBundlr;
-// // @ts-ignore
-// globalThis.BundlrEthereumWeb = EthereumBundlr;
-import "@bundlr-network/solana-web/esm/web/umd.bundle"
-import "@bundlr-network/ethereum-web/esm/web/umd.bundle"
-import "@bundlr-network/erc20-web/esm/web/umd.bundle"
-import "@bundlr-network/near-web/esm/web/umd.bundle"
+import * as Solana from "@bundlr-network/solana-web/esm/web/umd.bundle"
+// @ts-ignore
+import * as Ethereum from "@bundlr-network/ethereum-web/esm/web/umd.bundle"
+// @ts-ignore
+import * as Near from "@bundlr-network/near-web/esm/web/umd.bundle"
+// @ts-ignore
+import * as Erc20 from "@bundlr-network/erc20-web/esm/web/umd.bundle"
+// @ts-ignore
+globalThis.BundlrSolanaWeb = Solana;
+// @ts-ignore
+globalThis.BundlrEthereumWeb = Ethereum;
+// @ts-ignore
+globalThis.BundlrNearWeb = Near;
+// @ts-ignore
+globalThis.BundlrErc20Web = Erc20
+// import "@bundlr-network/solana-web/esm/web/umd.bundle"
+// import "@bundlr-network/ethereum-web/esm/web/umd.bundle"
+// import "@bundlr-network/erc20-web/esm/web/umd.bundle"
+// import "@bundlr-network/near-web/esm/web/umd.bundle"
 
 // import { WebBundlr } from "@bundlr-network/client/build/esm/bundle" 
 
