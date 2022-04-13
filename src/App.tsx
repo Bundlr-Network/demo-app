@@ -17,23 +17,24 @@ import { Web3Provider } from "@ethersproject/providers";
 
 import { WalletConnection, keyStores, connect } from "near-api-js";
 // @ts-ignore
-import * as SolanaBundlr from "@bundlr-network/solana-web/esm/web/umd.bundle"
-// @ts-ignore
-import * as EthereumBundlr from "@bundlr-network/ethereum-web/esm/web/umd.bundle"
-// @ts-ignore
-globalThis.BundlrSolanaWeb = SolanaBundlr;
-// @ts-ignore
-globalThis.BundlrEthereumWeb = EthereumBundlr;
-// import "@bundlr-network/solana-web/esm/web/umd.bundle"
-// import "@bundlr-network/ethereum-web/esm/web/umd.bundle"
+// import * as SolanaBundlr from "@bundlr-network/solana-web/esm/web/umd.bundle"
+// // @ts-ignore
+// import * as EthereumBundlr from "@bundlr-network/ethereum-web/esm/web/umd.bundle"
+// // @ts-ignore
+// globalThis.BundlrSolanaWeb = SolanaBundlr;
+// // @ts-ignore
+// globalThis.BundlrEthereumWeb = EthereumBundlr;
+import "@bundlr-network/solana-web/esm/web/umd.bundle"
+import "@bundlr-network/ethereum-web/esm/web/umd.bundle"
 
 // import { WebBundlr } from "@bundlr-network/client/build/esm/bundle" 
-// import type {WebBundlr as test} from "@bundlr-network/client/build/esm/@bundlr-network/client"
+
 // @ts-ignore
 import { WebBundlr } from "@bundlr-network/client/build/esm/bundle"
 
 declare var window: any // TODO: specifically extend type to valid injected objects.
 const PhantomWalletAdapter = require("@solana/wallet-adapter-phantom").PhantomWalletAdapter
+
 
 
 
