@@ -26,6 +26,8 @@ import { WalletConnection, keyStores, connect } from "near-api-js";
 // globalThis.BundlrEthereumWeb = EthereumBundlr;
 import "@bundlr-network/solana-web/esm/web/umd.bundle"
 import "@bundlr-network/ethereum-web/esm/web/umd.bundle"
+import "@bundlr-network/erc20-web/esm/web/umd.bundle"
+import "@bundlr-network/near-web/esm/web/umd.bundle"
 
 // import { WebBundlr } from "@bundlr-network/client/build/esm/bundle" 
 

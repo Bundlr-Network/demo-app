@@ -4,6 +4,10 @@
   "private": true,
   "dependencies": {
     "@bundlr-network/client": "^0.8.0-rc1",
+    "@bundlr-network/erc20-web": "^0.0.1-rc1",
+    "@bundlr-network/ethereum-web": "^0.0.1-rc1",
+    "@bundlr-network/near-web": "^0.0.1-rc1",
+    "@bundlr-network/solana-web": "^0.0.1-rc1",
     "@chakra-ui/icons": "^1.1.7",
     "@chakra-ui/react": "^1.8.8",
     "@emotion/react": "^11.9.0",
