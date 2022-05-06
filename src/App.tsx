@@ -25,6 +25,10 @@ import * as Near from "@bundlr-network/near-web/esm/web/umd.bundle"
 // @ts-ignore
 import * as Erc20 from "@bundlr-network/erc20-web/esm/web/umd.bundle"
 // @ts-ignore
+import * as Cosmos from "@bundlr-network/cosmos-web/esm/web/umd.bundle"
+// // @ts-ignore
+// import * as Cosmos from "../../Cosmos/web/esm/web/umd.bundle"
+// @ts-ignore
 globalThis.BundlrSolanaWeb = Solana;
 // @ts-ignore
 globalThis.BundlrEthereumWeb = Ethereum;
@@ -32,6 +36,8 @@ globalThis.BundlrEthereumWeb = Ethereum;
 globalThis.BundlrNearWeb = Near;
 // @ts-ignore
 globalThis.BundlrErc20Web = Erc20
+// @ts-ignore
+globalThis.BundlrCosmosWeb = Cosmos
 // import "@bundlr-network/solana-web/esm/web/umd.bundle"
 // import "@bundlr-network/ethereum-web/esm/web/umd.bundle"
 // import "@bundlr-network/erc20-web/esm/web/umd.bundle"
@@ -45,6 +51,8 @@ import { WebBundlr } from "@bundlr-network/client/build/esm/bundle"
 declare var window: any // TODO: specifically extend type to valid injected objects.
 const PhantomWalletAdapter = require("@solana/wallet-adapter-phantom").PhantomWalletAdapter
 
+import { Keplr } from "@keplr-wallet/types";
+import { getKeplrFromWindow } from "@keplr-wallet/stores";
 
 
 
@@ -255,6 +263,15 @@ function App() {
         toast({ status: "warning", title: "Click 'Connect' to be redirected to authorize access key creation." })
       }
       return wallet
+    },
+    "Keplr": async (c: any) => {
+      const wallet = await getKeplrFromWindow();
+      if(typeof wallet !== "undefined"){
+        const key = await wallet.getKey("cosmoshub-4");
+        setAddress(key.bech32Address);  
+        await wallet.enable(["cosmoshub-4"]);
+      }
+      return wallet
     }
 
   } as any
@@ -323,6 +340,17 @@ function App() {
         helperUrl: "https://helper.mainnet.near.org",
         explorerUrl: "https://explorer.mainnet.near.org",
       }
+    },
+    "cosmos": {
+      providers: ["Keplr"]/* ,
+      opts: {
+        networkId: "mainnet",
+        keyStore: new keyStores.BrowserLocalStorageKeyStore(),
+        nodeUrl: "https://rpc.mainnet.near.org",
+        walletUrl: "https://wallet.mainnet.near.org",
+        helperUrl: "https://helper.mainnet.near.org",
+        explorerUrl: "https://explorer.mainnet.near.org",
+      } */
     }
   } as any
 
