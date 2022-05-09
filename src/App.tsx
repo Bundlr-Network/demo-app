@@ -18,12 +18,12 @@ import { Web3Provider } from "@ethersproject/providers";
 import { WalletConnection, keyStores, connect } from "near-api-js";
 // @ts-ignore
 import * as Solana from "@bundlr-network/solana-web/esm/web/umd.bundle"
-// @ts-ignore
-import * as Ethereum from "@bundlr-network/ethereum-web/esm/web/umd.bundle"
-// @ts-ignore
-import * as Near from "@bundlr-network/near-web/esm/web/umd.bundle"
-// @ts-ignore
-import * as Erc20 from "@bundlr-network/erc20-web/esm/web/umd.bundle"
+// // @ts-ignore
+// import * as Ethereum from "@bundlr-network/ethereum-web/esm/web/umd.bundle"
+// // @ts-ignore
+// import * as Near from "@bundlr-network/near-web/esm/web/umd.bundle"
+// // @ts-ignore
+// import * as Erc20 from "@bundlr-network/erc20-web/esm/web/umd.bundle"
 // @ts-ignore
 import * as Cosmos from "@bundlr-network/cosmos-web/esm/web/umd.bundle"
 // // @ts-ignore
@@ -31,11 +31,11 @@ import * as Cosmos from "@bundlr-network/cosmos-web/esm/web/umd.bundle"
 // @ts-ignore
 globalThis.BundlrSolanaWeb = Solana;
 // @ts-ignore
-globalThis.BundlrEthereumWeb = Ethereum;
-// @ts-ignore
-globalThis.BundlrNearWeb = Near;
-// @ts-ignore
-globalThis.BundlrErc20Web = Erc20
+// globalThis.BundlrEthereumWeb = Ethereum;
+// // @ts-ignore
+// globalThis.BundlrNearWeb = Near;
+// // @ts-ignore
+// globalThis.BundlrErc20Web = Erc20
 // @ts-ignore
 globalThis.BundlrCosmosWeb = Cosmos
 // import "@bundlr-network/solana-web/esm/web/umd.bundle"
@@ -138,7 +138,7 @@ function App() {
   const uploadFile = async () => {
     if (img) {
       await bundler?.uploader.upload(img, [{ name: "Content-Type", value: "image/png" }])
-        .then((res:any) => {
+        .then((res: any) => {
           toast({
             status: res?.status === 200 || res?.status === 201 ? "success" : "error",
             title: res?.status === 200 || res?.status === 201 ? "Successful!" : `Unsuccessful! ${res?.status}`,
@@ -146,7 +146,7 @@ function App() {
             duration: 15000,
           });
         })
-        .catch((e:any) => { toast({ status: "error", title: `Failed to upload - ${e}` }) })
+        .catch((e: any) => { toast({ status: "error", title: `Failed to upload - ${e}` }) })
     }
   };
 
@@ -156,8 +156,8 @@ function App() {
       const value = parseInput(fundAmount)
       if (!value) return
       await bundler.fund(value)
-        .then((res:any) => { toast({ status: "success", title: `Funded ${res?.target}`, description: ` tx ID : ${res?.id}`, duration: 10000 }) })
-        .catch((e:any) => {
+        .then((res: any) => { toast({ status: "success", title: `Funded ${res?.target}`, description: ` tx ID : ${res?.id}`, duration: 10000 }) })
+        .catch((e: any) => {
           toast({ status: "error", title: `Failed to fund - ${e.data?.message || e.message}` })
         })
     }
@@ -171,7 +171,7 @@ function App() {
       if (!value) return
       await bundler
         .withdrawBalance(value)
-        .then((data:any) => {
+        .then((data: any) => {
           toast({
             status: "success",
             title: `Withdrawal successful - ${data.data?.tx_id}`,
@@ -222,7 +222,7 @@ function App() {
       await window.ethereum.enable();
       const provider = await connectWeb3(window.ethereum);
       const chainId = `0x${c.chainId.toString(16)}`
-      if(!chainChange){
+      if (!chainChange) {
         return provider
       }
       try { // additional logic for requesting a chain switch and conditional chain add.
@@ -266,9 +266,9 @@ function App() {
     },
     "Keplr": async (c: any) => {
       const wallet = await getKeplrFromWindow();
-      if(typeof wallet !== "undefined"){
+      if (typeof wallet !== "undefined") {
         const key = await wallet.getKey("cosmoshub-4");
-        setAddress(key.bech32Address);  
+        setAddress(key.bech32Address);
         await wallet.enable(["cosmoshub-4"]);
       }
       return wallet
@@ -382,8 +382,8 @@ function App() {
   };
 
   const initBundlr = async () => {
-    
-    const bundlr = await WebBundlr.init(bundlerHttpAddress, currency, provider, {providerUrl: rpcUrl, contractAddress, minConfirm})
+
+    const bundlr = await WebBundlr.init(bundlerHttpAddress, currency, provider, { providerUrl: rpcUrl, contractAddress, minConfirm })
 
     try {
       // Check for valid bundlr node
@@ -408,10 +408,10 @@ function App() {
     }
 
     intervalRef.current = window.setInterval(async () => {
-       bundler?.getLoadedBalance()
-       .then((r:any) => { setBalance(r.toString()) })
-       .catch((_:any) => clearInterval(intervalRef.current)) 
-      }, 5000)
+      bundler?.getLoadedBalance()
+        .then((r: any) => { setBalance(r.toString()) })
+        .catch((_: any) => clearInterval(intervalRef.current))
+    }, 5000)
   }
 
   // parse decimal input into atomic units
@@ -465,28 +465,28 @@ function App() {
       </HStack>
       {devMode && (
         <>
-        <Text>Advanced Overrides (Only change if you know what you're doing!)</Text>
-        <HStack mt={10}>
-        <Input
-          value={rpcUrl}
-          onChange={(evt: React.BaseSyntheticEvent) => {setRpcUrl(evt.target.value)}}
-          placeholder="RPC Url"
-        />
-        <Input
-          value={contractAddress}
-          onChange={(evt: React.BaseSyntheticEvent) => {setContractAddress(evt.target.value)}}
-          placeholder="Contract address"
-        />
-        <Input width='450px'
-          value={minConfirm}
-          onChange={(evt: React.BaseSyntheticEvent) => {setMinConfirm(evt.target.value)}}
-          placeholder="minConfirm"
-        />
-        <Button onClick={() => setChainChange(!chainChange)} width='400px'>
-          {chainChange ? "Disable" : "Enable"} Chain Changing
-        </Button>
+          <Text>Advanced Overrides (Only change if you know what you're doing!)</Text>
+          <HStack mt={10}>
+            <Input
+              value={rpcUrl}
+              onChange={(evt: React.BaseSyntheticEvent) => { setRpcUrl(evt.target.value) }}
+              placeholder="RPC Url"
+            />
+            <Input
+              value={contractAddress}
+              onChange={(evt: React.BaseSyntheticEvent) => { setContractAddress(evt.target.value) }}
+              placeholder="Contract address"
+            />
+            <Input width='450px'
+              value={minConfirm}
+              onChange={(evt: React.BaseSyntheticEvent) => { setMinConfirm(evt.target.value) }}
+              placeholder="minConfirm"
+            />
+            <Button onClick={() => setChainChange(!chainChange)} width='400px'>
+              {chainChange ? "Disable" : "Enable"} Chain Changing
+            </Button>
 
-        </HStack>
+          </HStack>
         </>
       )}
       {
@@ -552,8 +552,8 @@ function App() {
           </>
         )
       }
-      <Button onClick={() => {setDevMode(!devMode)}}>
-        {devMode ?  "Hide": "Show"} Advanced Options
+      <Button onClick={() => { setDevMode(!devMode) }}>
+        {devMode ? "Hide" : "Show"} Advanced Options
       </Button>
     </VStack >
 
