@@ -17,7 +17,7 @@ import { Web3Provider } from "@ethersproject/providers";
 
 import { WalletConnection, keyStores, connect } from "near-api-js";
 // @ts-ignore
-import * as Solana from "@bundlr-network/solana-web/esm/web/umd.bundle"
+// import * as Solana from "@bundlr-network/solana-web/esm/web/umd.bundle"
 // // @ts-ignore
 // import * as Ethereum from "@bundlr-network/ethereum-web/esm/web/umd.bundle"
 // // @ts-ignore
@@ -29,7 +29,7 @@ import * as Cosmos from "@bundlr-network/cosmos-web/esm/web/umd.bundle"
 // // @ts-ignore
 // import * as Cosmos from "../../Cosmos/web/esm/web/umd.bundle"
 // @ts-ignore
-globalThis.BundlrSolanaWeb = Solana;
+// globalThis.BundlrSolanaWeb = Solana;
 // @ts-ignore
 // globalThis.BundlrEthereumWeb = Ethereum;
 // // @ts-ignore
@@ -70,7 +70,7 @@ function App() {
   const [bundler, setBundler] = React.useState<WebBundlr>();
   //const [bundler, setBundler] = React.useState<SolanaBundlr>();
   const [bundlerHttpAddress, setBundlerAddress] = React.useState<string>(
-    "https://node1.bundlr.network"
+    "http://localhost:10001"
   );
 
   const [rpcUrl, setRpcUrl] = React.useState<string>();
