@@ -70,7 +70,7 @@ function App() {
   const [bundler, setBundler] = React.useState<WebBundlr>();
   //const [bundler, setBundler] = React.useState<SolanaBundlr>();
   const [bundlerHttpAddress, setBundlerAddress] = React.useState<string>(
-    "http://localhost:10001"
+    "https://node1.bundlr.network"
   );
 
   const [rpcUrl, setRpcUrl] = React.useState<string>();
