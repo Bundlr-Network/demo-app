@@ -17,6 +17,7 @@ const { keyStores, connect } = nearAPI;
 
 declare var window: any // TODO: specifically extend type to valid injected objects.
 const PhantomWalletAdapter = require("@solana/wallet-adapter-phantom/lib/cjs/index").PhantomWalletAdapter
+const SolflareWalletAdapter = require("@solana/wallet-adapter-solflare/lib/cjs/index").SolflareWalletAdapter
 
 
 function App() {
@@ -98,11 +99,15 @@ function App() {
     if (img) {
       await bundler?.uploader.upload(img, [{ name: "Content-Type", value: "image/png" }])
         .then((res) => {
+          const description = res?.data.id ? `https://arweave.net/${res.data.id}` : undefined;
+          if (description) {
+            console.log(`Uploaded: ${description}`);
+          }
           toast({
             status: res?.status === 200 || res?.status === 201 ? "success" : "error",
             title: res?.status === 200 || res?.status === 201 ? "Successful!" : `Unsuccessful! ${res?.status}`,
-            description: res?.data.id ? `https://arweave.net/${res.data.id}` : undefined,
             duration: 15000,
+            description,
           });
         })
         .catch(e => { toast({ status: "error", title: `Failed to upload - ${e}` }) })
@@ -202,6 +207,14 @@ function App() {
       return provider;
     },
     "WalletConnect": async (c: any) => { return await connectWeb3(await (new WalletConnectProvider(c)).enable()) },
+    "Solflare": async (c: any) => {
+      if (window.solflare?.isSolflare) {
+        await window.solflare.connect();
+        const p = new SolflareWalletAdapter()
+        await p.connect()
+        return p;
+      }
+    },
     "Phantom": async (c: any) => {
       if (window.solana.isPhantom) {
         await window.solana.connect();
@@ -230,7 +243,7 @@ function App() {
 
   const currencyMap = {
     "solana": {
-      providers: ["Phantom"], opts: {}
+      providers: ["Phantom", "Solflare"], opts: {}
     },
     "matic": {
       providers: ethProviders,

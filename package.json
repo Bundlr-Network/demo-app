@@ -15,7 +15,7 @@
     "@solana/wallet-adapter-base": "^0.9.2",
     "@solana/wallet-adapter-phantom": "^0.9.2",
     "@solana/wallet-adapter-slope": "^0.5.2",
-    "@solana/wallet-adapter-solflare": "^0.6.2",
+    "@solana/wallet-adapter-solflare": "^0.6.6",
     "@solana/wallet-adapter-tokenpocket": "^0.4.2",
     "@svgr/webpack": "5.5.0",
     "@testing-library/jest-dom": "^5.11.4",
