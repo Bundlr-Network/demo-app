@@ -267,9 +267,9 @@ function App() {
     "Keplr": async (c: any) => {
       const wallet = await getKeplrFromWindow();
       if (typeof wallet !== "undefined") {
-        const key = await wallet.getKey("cosmoshub-4");
+        const key = await wallet.getKey(c.chainId);
         setAddress(key.bech32Address);
-        await wallet.enable(["cosmoshub-4"]);
+        await wallet.enable([c.chainId]);
       }
       return wallet
     }
@@ -342,16 +342,23 @@ function App() {
       }
     },
     "cosmos": {
-      providers: ["Keplr"]/* ,
+      providers: ["Keplr"],
       opts: {
-        networkId: "mainnet",
-        keyStore: new keyStores.BrowserLocalStorageKeyStore(),
-        nodeUrl: "https://rpc.mainnet.near.org",
-        walletUrl: "https://wallet.mainnet.near.org",
-        helperUrl: "https://helper.mainnet.near.org",
-        explorerUrl: "https://explorer.mainnet.near.org",
-      } */
-    }
+        chainId: "cosmoshub-4"
+      }
+    },
+    "kyve": {
+      providers: ["Keplr"],
+      opts: {
+        chainId: "korellia"
+      }
+    },
+    "akash": {
+      providers: ["Keplr"],
+      opts: {
+        chainId: "akashnet-2"
+      }
+    },
   } as any
 
 
